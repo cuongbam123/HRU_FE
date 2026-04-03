@@ -49,8 +49,8 @@ const AllProducts = () => {
 
   const normalizeImageUrl = (url) => {
     if (!url) return "/default_product.png";
-    if (url.startsWith("http://localhost:3001"))
-      return url.replace("http://localhost:3001", BASE_URL);
+    if (url.startsWith("https://my-backend-gbqg.onrender.com"))
+      return url.replace("https://my-backend-gbqg.onrender.com", BASE_URL);
     if (url.startsWith("/")) return `${BASE_URL}${url}`;
     return url;
   };

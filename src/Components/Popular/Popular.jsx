@@ -11,7 +11,7 @@ const Popular = () => {
   const normalizeImage = (img) => {
     if (!img) return ""; 
 
-    if (img.startsWith("http://localhost:3001")) return img.replace("http://localhost:3001", BASE_URL);
+    if (img.startsWith("https://my-backend-gbqg.onrender.com")) return img.replace("https://my-backend-gbqg.onrender.com", BASE_URL);
     if (img.startsWith("http://") || img.startsWith("https://")) return img;
     if (img.startsWith("/")) return `${BASE_URL}${img}`;
     if (img.startsWith("uploads/")) return `${BASE_URL}/${img}`;

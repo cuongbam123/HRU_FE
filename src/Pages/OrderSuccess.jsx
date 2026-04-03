@@ -9,7 +9,7 @@ const OrderSuccess = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:3001/api/orders/${id}`, {
+    fetch(`https://my-backend-gbqg.onrender.com/api/orders/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

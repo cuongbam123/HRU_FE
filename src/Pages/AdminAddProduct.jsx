@@ -26,7 +26,7 @@ const AdminAddProduct = () => {
         formData.append('image', selectedImage);
 
         try {
-            const response = await axios.post('http://localhost:3001/api/products', formData, {
+            const response = await axios.post('https://my-backend-gbqg.onrender.com/api/products', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${localStorage.getItem('token')}`

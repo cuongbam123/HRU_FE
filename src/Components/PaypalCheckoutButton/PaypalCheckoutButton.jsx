@@ -12,7 +12,7 @@ function PaypalCheckoutButton({ amount }) {
         setPaid(true);
 
         // 👉 Nếu muốn lưu đơn hàng vào database, bạn có thể gọi API POST ở đây
-        // fetch("http://localhost:3001/api/orders", {...})
+        // fetch("https://my-backend-gbqg.onrender.com/api/orders", {...})
     };
 
     if (paid) {

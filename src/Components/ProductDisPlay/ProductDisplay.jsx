@@ -28,17 +28,17 @@ const ProductDisplay = ({ product }) => {
 
   // 🔥 Nếu đang chạy dev → luôn dùng localhost
   if (process.env.NODE_ENV === "development") {
-    if (img.startsWith("http://localhost:3001") || img.startsWith("/")) {
-      return `http://localhost:3001${img.replace("http://localhost:3001", "")}`;
+    if (img.startsWith("https://my-backend-gbqg.onrender.com") || img.startsWith("/")) {
+      return `https://my-backend-gbqg.onrender.com${img.replace("https://my-backend-gbqg.onrender.com", "")}`;
     }
-    return `http://localhost:3001/${img}`;
+    return `https://my-backend-gbqg.onrender.com/${img}`;
   }
 
   // 🔥 Khi chạy production
 
   // Nếu link localhost → chuyển thành BASE_URL
-  if (img.startsWith("http://localhost:3001")) {
-    return img.replace("http://localhost:3001", BASE_URL);
+  if (img.startsWith("https://my-backend-gbqg.onrender.com")) {
+    return img.replace("https://my-backend-gbqg.onrender.com", BASE_URL);
   }
 
   // Nếu đã là http/https → giữ nguyên

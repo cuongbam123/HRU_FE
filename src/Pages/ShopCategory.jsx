@@ -116,8 +116,8 @@ const ShopCategory = ({ banner, category }) => {
         {sortedProducts.length > 0 ? (
           sortedProducts.slice(0, visibleCount).map((product) => {
             let imageUrl = product.image || "";
-if (imageUrl.startsWith("http://localhost:3001")) {
-  imageUrl = imageUrl.replace("http://localhost:3001", BASE_URL);
+if (imageUrl.startsWith("https://my-backend-gbqg.onrender.com")) {
+  imageUrl = imageUrl.replace("https://my-backend-gbqg.onrender.com", BASE_URL);
 } else if (imageUrl.startsWith("/")) {
   imageUrl = `${BASE_URL}${imageUrl}`;
 }

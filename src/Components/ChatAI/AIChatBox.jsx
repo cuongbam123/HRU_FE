@@ -10,7 +10,7 @@ const getApiBase = () => {
   } catch (e) {
     // Ignore error
   }
-  return "http://localhost:3001";
+  return "https://my-backend-gbqg.onrender.com";
 };
 
 const API_BASE = getApiBase();

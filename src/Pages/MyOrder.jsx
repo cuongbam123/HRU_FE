@@ -10,7 +10,7 @@ const MyOrders = () => {
     const fetchOrders = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:3001/api/orders/my", {
+        const res = await fetch("https://my-backend-gbqg.onrender.com/api/orders/my", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json", // ✅ nên có
