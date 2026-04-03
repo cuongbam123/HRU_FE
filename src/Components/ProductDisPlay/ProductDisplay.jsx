@@ -4,6 +4,8 @@ import star_icon from "../Assets/star_icon.png";
 import star_dull_icon from "../Assets/star_dull_icon.png";
 import { ShopContext } from "../../Context/ShopContext";
 import { useNavigate } from "react-router-dom";
+// Dòng import helper xử lý ảnh (Đường dẫn có thể cần chỉnh lại chút ít tùy cấu trúc thư mục của bạn)
+import { formatImageUrl } from "../../utils/formatImage";
 
 const ProductDisplay = ({ product }) => {
   const { addToCart } = useContext(ShopContext);
@@ -18,50 +20,8 @@ const ProductDisplay = ({ product }) => {
 
   if (!product) return <p>Đang tải sản phẩm...</p>;
 
-  // ✅ Lấy BASE_URL từ .env
-  const BASE_URL =
-    process.env.REACT_APP_BASE_URL || "https://my-backend-gbqg.onrender.com";
-
-  // ✅ Chuẩn hoá đường dẫn ảnh (fix localhost, thêm BASE_URL nếu thiếu)
-  const normalizeImageUrl = (img) => {
-  if (!img) return "";
-
-  // 🔥 Nếu đang chạy dev → luôn dùng localhost
-  if (process.env.NODE_ENV === "development") {
-    if (img.startsWith("https://my-backend-gbqg.onrender.com") || img.startsWith("/")) {
-      return `https://my-backend-gbqg.onrender.com${img.replace("https://my-backend-gbqg.onrender.com", "")}`;
-    }
-    return `https://my-backend-gbqg.onrender.com/${img}`;
-  }
-
-  // 🔥 Khi chạy production
-
-  // Nếu link localhost → chuyển thành BASE_URL
-  if (img.startsWith("https://my-backend-gbqg.onrender.com")) {
-    return img.replace("https://my-backend-gbqg.onrender.com", BASE_URL);
-  }
-
-  // Nếu đã là http/https → giữ nguyên
-  if (img.startsWith("http://") || img.startsWith("https://")) {
-    return img;
-  }
-
-  // Nếu có dấu / → ghép BASE_URL
-  if (img.startsWith("/")) {
-    return `${BASE_URL}${img}`;
-  }
-
-  // Ghép BASE_URL/
-  return `${BASE_URL}/${img}`;
-};
-
-  // ✅ Gọi hàm xử lý ảnh
-  const imageUrl = normalizeImageUrl(product.image);
-
-  // Debug (chỉ để kiểm tra khi dev)
-  if (process.env.NODE_ENV === "development") {
-    console.log("🖼️ ProductDisplay imageUrl:", imageUrl);
-  }
+  // ✅ Gọi hàm xử lý ảnh cực kỳ ngắn gọn
+  const imageUrl = formatImageUrl(product.image);
 
   return (
     <div className="productdisplay">

@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { ShopContext } from "../Context/ShopContext";
 import { useNavigate } from "react-router-dom";
 import "./CSS/Cart.css";
+// Import helper xử lý ảnh
+import { formatImageUrl } from "../utils/formatImage";
 
 const Cart = () => {
   const {
@@ -14,10 +16,6 @@ const Cart = () => {
   } = useContext(ShopContext);
 
   const navigate = useNavigate();
-
-  // URL backend Render
-  const BASE_URL =
-    process.env.REACT_APP_BASE_URL || "https://my-backend-gbqg.onrender.com";
 
   // Lọc các sản phẩm có trong giỏ
   const cartProducts = all_product.filter((product) => cartItems[product._id]);
@@ -51,16 +49,12 @@ const Cart = () => {
         {cartProducts.length > 0 ? (
           <>
             {cartProducts.map((product) => {
-              const price = Number(product.price) || 0; // vẫn giữ nguyên field price
+              const price = Number(product.price) || 0;
               const quantity = cartItems[product._id] || 0;
               const total = price * quantity;
 
-              // ✅ Sửa chỗ image: nếu là localhost thì đổi sang Render URL
-              let imageUrl = product.image || "/no-image.png";
-              if (imageUrl.includes("localhost:3001")) {
-                const filename = imageUrl.split("/").pop();
-                imageUrl = `${BASE_URL}/uploads/${filename}`;
-              }
+              // ✅ Lấy link ảnh chuẩn thông qua helper
+              const imageUrl = formatImageUrl(product.image);
 
               return (
                 <div key={product._id} className="cart-item">
