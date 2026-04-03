@@ -1,25 +1,25 @@
 // src/utils/formatImage.js
 
 export const formatImageUrl = (imgUrl) => {
-  if (!imgUrl) return "/no-image.png"; // Ảnh mặc định nếu lỗi
+  if (!imgUrl) return "/no-image.png";
 
   const BASE_URL = process.env.REACT_APP_BASE_URL || "https://my-backend-gbqg.onrender.com";
 
-  // 1. Chặn đứng localhost: Nếu trong DB vẫn còn lưu link localhost từ lúc dev
-  if (imgUrl.includes("localhost:3001")) {
-    return imgUrl.replace("http://localhost:3001", BASE_URL);
+  // 🔥 Dùng Regex để chém đẹp mọi link localhost (http hay https, port nào cũng dọn hết)
+  if (imgUrl.includes("localhost")) {
+    return imgUrl.replace(/^https?:\/\/localhost:\d+/, BASE_URL);
   }
 
-  // 2. Nếu ảnh đã là link xịn (https://my-backend-gbqg... hoặc link ngoài mạng)
+  // Nếu link đã chuẩn (http/https)
   if (imgUrl.startsWith("http://") || imgUrl.startsWith("https://")) {
     return imgUrl;
   }
 
-  // 3. Nếu DB lưu kiểu tương đối bắt đầu bằng "/" (VD: /uploads/anh.png)
+  // Nếu link lưu kiểu tương đối có dấu / ở đầu
   if (imgUrl.startsWith("/")) {
     return `${BASE_URL}${imgUrl}`;
   }
 
-  // 4. Nếu DB lưu kiểu tương đối thiếu "/" (VD: uploads/anh.png)
+  // Nếu link lưu kiểu tương đối thiếu dấu /
   return `${BASE_URL}/${imgUrl}`;
 };
