@@ -1,23 +1,25 @@
+// src/utils/formatImage.js
+
 export const formatImageUrl = (imgUrl) => {
   if (!imgUrl) return "/no-image.png";
 
   const BASE_URL = process.env.REACT_APP_BASE_URL || "https://my-backend-gbqg.onrender.com";
 
-  let finalUrl = imgUrl;
-
-  // 1. Quét sạch mọi loại localhost bằng Regex siêu mạnh
-  if (finalUrl.includes("localhost")) {
-    finalUrl = finalUrl.replace(/http:\/\/(localhost|127\.0\.0\.1):\d+/gi, BASE_URL);
-  } 
-  // 2. Nếu link là đường dẫn tương đối
-  else if (finalUrl.startsWith("/")) {
-    finalUrl = `${BASE_URL}${finalUrl}`;
-  } 
-  else if (!finalUrl.startsWith("http")) {
-    finalUrl = `${BASE_URL}/${finalUrl}`;
+  // 🔥 Dùng Regex để chém đẹp mọi link localhost (http hay https, port nào cũng dọn hết)
+  if (imgUrl.includes("localhost")) {
+    return imgUrl.replace(/^https?:\/\/localhost:\d+/, BASE_URL);
   }
 
-  // 3. Fix lỗi chí mạng: Mã hóa các khoảng trắng trong tên ảnh
-  // Biến "Screenshot 2025..." thành "Screenshot%202025..."
-  return encodeURI(finalUrl);
+  // Nếu link đã chuẩn (http/https)
+  if (imgUrl.startsWith("http://") || imgUrl.startsWith("https://")) {
+    return imgUrl;
+  }
+
+  // Nếu link lưu kiểu tương đối có dấu / ở đầu
+  if (imgUrl.startsWith("/")) {
+    return `${BASE_URL}${imgUrl}`;
+  }
+
+  // Nếu link lưu kiểu tương đối thiếu dấu /
+  return `${BASE_URL}/${imgUrl}`;
 };
