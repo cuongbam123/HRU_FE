@@ -6,6 +6,8 @@ import "./CSS/AllProducts.css";
 import { motion } from "framer-motion";
 import dropdown_icon from "../Components/Assets/dropdown_icon.png";
 import { toast } from "react-toastify";
+// ✅ Import helper xử lý ảnh dùng chung
+import { formatImageUrl } from "../utils/formatImage"; 
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -20,8 +22,8 @@ const AllProducts = () => {
   const API_URL =
     process.env.REACT_APP_API_URL ||
     "https://my-backend-gbqg.onrender.com/api";
-  const BASE_URL =
-    process.env.REACT_APP_BASE_URL || "https://my-backend-gbqg.onrender.com";
+  
+  // (Đã xóa hàm normalizeImageUrl cũ ở đây cho code gọn gàng)
 
   useEffect(() => {
     fetchProducts();
@@ -45,14 +47,6 @@ const AllProducts = () => {
     } catch (err) {
       console.error("❌ Lỗi khi tải danh mục:", err);
     }
-  };
-
-  const normalizeImageUrl = (url) => {
-    if (!url) return "/default_product.png";
-    if (url.startsWith("https://my-backend-gbqg.onrender.com"))
-      return url.replace("https://my-backend-gbqg.onrender.com", BASE_URL);
-    if (url.startsWith("/")) return `${BASE_URL}${url}`;
-    return url;
   };
 
   // 🧩 Lọc sản phẩm
@@ -141,7 +135,9 @@ const AllProducts = () => {
       <div className="product-list">
         {sortedProducts.length > 0 ? (
           sortedProducts.slice(0, visibleCount).map((product) => {
-            const imageUrl = normalizeImageUrl(product.image);
+            // ✅ Gọi hàm xử lý ảnh chuẩn từ file helper
+            const imageUrl = formatImageUrl(product.image);
+            
             return (
               <motion.div
                 key={product._id}
