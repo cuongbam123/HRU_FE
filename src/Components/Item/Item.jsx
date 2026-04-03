@@ -1,7 +1,7 @@
 import React from "react";
 import "./Item.css";
 import { Link } from "react-router-dom";
-import { formatImageUrl } from "../utils/formatImage"; // Nhớ import đường dẫn cho đúng
+import { formatImageUrl } from "../../utils/formatImage"; // Nhớ import đường dẫn cho đúng
 
 const Item = (props) => {
   return (
