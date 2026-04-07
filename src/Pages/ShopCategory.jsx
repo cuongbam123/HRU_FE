@@ -6,6 +6,9 @@ import dropdown_icon from "../Components/Assets/dropdown_icon.png";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+// ✅ 1. Import helper xử lý ảnh (Đảm bảo đường dẫn này trỏ đúng đến file utils của bạn)
+import { formatImageUrl } from "../utils/formatImage"; 
+
 const ShopCategory = ({ banner, category }) => {
   const [searchParams] = useSearchParams();
   const brand = searchParams.get("brand");
@@ -18,13 +21,9 @@ const ShopCategory = ({ banner, category }) => {
 
   const { addToCart } = useContext(ShopContext);
 
-  // ✅ Lấy URL backend từ .env
   const API_URL = process.env.REACT_APP_API_URL || "https://my-backend-gbqg.onrender.com/api";
-  const BASE_URL = process.env.REACT_APP_BASE_URL || "https://my-backend-gbqg.onrender.com";
 
   useEffect(() => {
-    console.log("🔍 API_URL:", API_URL);
-    console.log("🔍 BASE_URL:", BASE_URL);
     fetchProducts();
   }, []);
 
@@ -115,14 +114,9 @@ const ShopCategory = ({ banner, category }) => {
       <div className="product-list">
         {sortedProducts.length > 0 ? (
           sortedProducts.slice(0, visibleCount).map((product) => {
-            let imageUrl = product.image || "";
-if (imageUrl.startsWith("https://my-backend-gbqg.onrender.com")) {
-  imageUrl = imageUrl.replace("https://my-backend-gbqg.onrender.com", BASE_URL);
-} else if (imageUrl.startsWith("/")) {
-  imageUrl = `${BASE_URL}${imageUrl}`;
-}
-
-            console.log("🖼️ Product image URL:", imageUrl);
+            
+            // ✅ 2. Bỏ đoạn code if...else lằng nhằng đi và chỉ gọi hàm này
+            const imageUrl = formatImageUrl(product.image);
 
             return (
               <div key={product._id} className="product-card">
